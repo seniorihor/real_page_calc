@@ -12,8 +12,22 @@ module RealPageCalc
       class RPN < Hanami::CLI::Command
         desc "interactive reverse polish notation calculator"
 
-        def call(*)
-          puts "calculating RPN..."
+        option :io,
+               default: "standard",
+               values: %w[standard websocket file tcpsocket],
+               desc: "input/output interface"
+
+        def call(**options)
+          stack = []
+          io = IO.const_get(options.fetch(:io).capitalize).new
+
+          while (input = io.input)
+            expression = InputParser.new(input, stack)
+            result = expression.parse
+
+            io.output(result)
+            stack = result if expression.valid?
+          end
         end
       end
 

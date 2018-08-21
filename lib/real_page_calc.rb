@@ -1,5 +1,6 @@
-require "real_page_calc/cli"
-require "real_page_calc/version"
+Dir.glob("lib/**/*.rb").each do |file|
+  require file.gsub("lib/", "").gsub(".rb", "")
+end
 
 module RealPageCalc
 end
