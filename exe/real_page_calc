@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "real_page_calc"
+
+RealPageCalc::CLI.new.call
