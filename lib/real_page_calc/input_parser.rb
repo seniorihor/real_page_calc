@@ -1,7 +1,5 @@
 module RealPageCalc
   class InputParser
-    SUPPORTED_OPERATORS = %w[+ - * /].freeze
-
     def initialize(input, stack)
       @input = input
       @stack = stack.dup
@@ -15,9 +13,7 @@ module RealPageCalc
           @stack.push(token.to_f)
         when operator?(token)
           next if @stack.size < 2
-          rhs = @stack.pop
-          lhs = @stack.pop
-          result = lhs.public_send(token, rhs)
+          result = OPERATION_CLASSES.fetch(token).call(@stack.pop(2))
           @stack.push(result) unless result.nan?
         else
           @error = true

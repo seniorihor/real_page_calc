@@ -25,7 +25,7 @@ module RealPageCalc
             expression = InputParser.new(input, stack)
             result = expression.parse
 
-            io.output(result)
+            io.output(result.last)
             stack = result if expression.valid?
           end
         end
