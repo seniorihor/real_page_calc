@@ -3,7 +3,11 @@ module RealPageCalc
     class Division < Base
       def evaluate
         lhs, rhs = operands
-        lhs.public_send(operator, rhs)
+        if rhs.zero?
+          raise ZeroDivisionError
+        else
+          lhs.public_send(operator, rhs)
+        end
       end
 
       private

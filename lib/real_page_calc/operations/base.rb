@@ -13,6 +13,10 @@ module RealPageCalc
         raise NotImplementedError
       end
 
+      def self.arity
+        2
+      end
+
       private
 
       attr_reader :operands

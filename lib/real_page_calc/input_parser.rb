@@ -12,9 +12,15 @@ module RealPageCalc
         when numeric?(token)
           @stack.push(token.to_f)
         when operator?(token)
-          next if @stack.size < 2
-          result = OPERATION_CLASSES.fetch(token).call(@stack.pop(2))
-          @stack.push(result) unless result.nan?
+          operation = OPERATION_CLASSES.fetch(token)
+          next if @stack.size < operation.arity
+
+          begin
+            result = operation.call(@stack.pop(operation.arity))
+            @stack.push(result) unless result && result.nan?
+          rescue ZeroDivisionError
+            puts "Zero division is not allowed"
+          end
         else
           @error = true
         end

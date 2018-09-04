@@ -33,6 +33,10 @@ RSpec.describe RealPageCalc::InputParser do
     calculate("6 3 /", 2)
   end
 
+  it "sin" do
+    calculate("3.14 sin", 0.0015926529164868282)
+  end
+
   it "multi digit operands" do
     calculate("33 3 /", 11)
   end
@@ -77,4 +81,13 @@ RSpec.describe RealPageCalc::InputParser do
     calculate("3 1 +?", [3, 1])
     calculate("3h 1 /", 1)
   end
+
+  it "arity works" do
+    calculate("2 #{Math::PI} 2 / sin +", 3)
+  end
+
+  it "division by zero" do
+    calculate("3 0 /", nil)
+  end
+
 end
